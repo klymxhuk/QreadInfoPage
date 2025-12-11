@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title_page">Інструкція: Бот та Web-інтерфейс QR-кодів</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Дополнительные стили для лучшей типографики и фона */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* bg-slate-100 */
+        }
+        /* Стили для активной кнопки навигации */
+        .tab-active {
+            background-color: #1d4ed8; /* blue-700 */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tab-inactive {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #1e40af; /* blue-800 */
+        }
+        /* Стиль для шагов в ЦУИ-инструкции, чтобы имитировать карточки */
+        .step-item {
+            background-color: #f8fafc; /* bg-slate-50 */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #3b82f6; /* blue-500 */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        /* Удаляем старые стили для кнопок языка, так как используется select */
+        /* .lang-active {
+            background-color: #059669; 
+            color: white;
+        }
+        .lang-inactive {
+            background-color: #d1fae5; 
+            color: #065f46; 
+        } */
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        
+        <!-- Выпадающее меню переключения языка -->
+        <div class="flex justify-end mb-4 space-x-2">
+            <select id="language-selector" onchange="setLanguage(this.value)"
+                class="bg-white border border-gray-300 text-gray-700 py-1.5 px-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
+                <option value="ua" selected>UA</option>
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
+            </select>
+        </div>
+
+        <!-- Навигационные кнопки (вкладки) -->
+        <div class="flex justify-center mb-8 space-x-4">
+            <button id="tab-telegram-btn" onclick="showTab('telegram')"
+                class="px-6 py-3 font-semibold rounded-full transition duration-200 text-lg tab-active"
+                data-i18n="tab_telegram">
+                Telegram
+            </button>
+            <button id="tab-cui-btn" onclick="showTab('cui')"
+                class="px-6 py-3 font-semibold rounded-full transition duration-200 text-lg tab-inactive"
+                data-i18n="tab_cui">
+                Web-інтерфейс
+            </button>
+        </div>
+
+        <!-- Основной контейнер с содержимым -->
+        <div class="bg-white p-6 sm:p-10 rounded-xl shadow-2xl">
+
+            <!-- Контент для Telegram -->
+            <div id="telegram-content" class="tab-content">
+                <header class="text-center mb-10">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-700 mb-2" data-i18n="title_telegram">
+                        Інструкція по QR-Code Pass Bot
+                    </h1>
+                    <p class="text-lg text-gray-500" data-i18n="subtitle_telegram">Покрокова інструкція для отримання разових перепусток</p>
+                </header>
+
+                <!-- Секция 1: QR-код и регистрация -->
+                <section class="mb-12 border-b pb-8 border-blue-100">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">1.</span> <span data-i18n="h2_1">Реєстрація та початок роботи</span>
+                    </h2>
+
+                    <div class="flex flex-col md:flex-row items-center justify-between bg-blue-50 p-6 rounded-lg shadow-inner">
+                        
+                        <!-- Изображение QR-кода -->
+                        <div class="mb-6 md:mb-0 md:mr-8 flex-shrink-0">
+                            <p class="text-sm font-medium text-gray-600 mb-2 text-center" data-i18n="p_qr_use">Використовуйте для входу в бот:</p>
+                            <!-- Плейсхолдер для QR-кода -->
+                            <img
+                                src="qr.jpg"
+                                alt="QR-код для регистрации в боте @QRCODEPASSBOT"
+                                class="w-48 h-48 sm:w-64 sm:h-64 rounded-xl border-4 border-white shadow-lg mx-auto"
+                                onerror="this.onerror=null; this.src='https://placehold.co/250x250/ff7e5f/ffffff?text=QR+CODE+HERE'"
+                            />
+                        </div>
+
+                        <!-- Шаги регистрации -->
+                        <div class="md:w-3/5 space-y-4">
+                            <p class="text-lg font-semibold text-gray-700">
+                                <span class="text-blue-600">Действие 1.1:</span> <span data-i18n="h3_1_1">Зайдіть та зареєструйтеся</span>
+                            </p>
+                            <div class="p-3 bg-white rounded-lg shadow-sm">
+                                <p data-i18n="p_1_1">
+                                    Перейдіть по QR-коду вище (або знайдіть бота за іменем <a href="https://t.me/qrcodepassbot" target="_blank"><b>@QRCODEPASSBOT</b></a>).
+                                    Запустіть бота, натиснувши «Розпочати» (Start) та дотримуйтесь усіх <b>інструкцій</b> для проходження реєстрації.
+                                </p>
+                            </div>
+                            <p class="text-lg font-semibold text-gray-700">
+                                <span class="text-blue-600">Действие 1.2:</span> <span data-i18n="h3_1_2">Підтвердження</span>
+                            </p>
+                            <div class="p-3 bg-white rounded-lg shadow-sm border-l-4 border-green-500">
+                                <p data-i18n="p_1_2">
+                                    Після введення даних, підтвердьте вашу реєстрацію, надіславши код підтвердження в бот, код бот надішле на вашу <b>електронну пошту (email)</b>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Секция 2: Генерация и просмотр -->
+                <section class="mb-12 border-b pb-8 border-blue-100">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">2.</span> <span data-i18n="h2_2">Генерація та перегляд перепусток</span>
+                    </h2>
+
+                    <div class="space-y-6">
+                        
+                        <!-- Шаг 2.1: Генерация нового пропуска -->
+                        <div class="p-6 bg-green-50 border-l-4 border-green-600 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                            <p class="text-xl font-bold text-green-700 mb-2" data-i18n="h3_2_1">Генерація нового QR-коду</p>
+                            <p class="text-gray-700" data-i18n="p_2_1">
+                                Після підтвердження реєстрації через email, поверніться до чату з ботом. 
+                                Використовуйте <b>меню чат-бота</b> «Створити перепустку», щоб <b>згенеерувати новий разовий QR-код</b>. 
+                            </p>
+                        </div>
+                        
+                        <!-- Шаг 2.2: Просмотр выданных пропусков -->
+                        <div class="p-6 bg-yellow-50 border-l-4 border-yellow-600 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                            <p class="text-xl font-bold text-yellow-700 mb-2" data-i18n="h3_2_2">Перегляд виданих перепусток («Мої перепустки»)</p>
+                            <p class="text-gray-700" data-i18n="p_2_2">
+                                Щоб побачити всі раніше видані перепустки, знайдіть у меню чат-бота пункт <b>«Мої перепустки»</b>. Це дозволить вам відстежувати статус, дату видачі та дані ваших QR-кодів.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Секция 3: Дополнительные настройки (Смена языка) -->
+                <section>
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">3.</span> <span data-i18n="h2_3">Додаткові налаштування</span>
+                    </h2>
+                    <div class="space-y-6">
+                        <!-- Шаг 3.1: Смена языка -->
+                        <div class="p-6 bg-purple-50 border-l-4 border-purple-600 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                            <p class="text-xl font-bold text-purple-700 mb-2" data-i18n="h3_3_1">Зміна мови інтерфейсу</p>
+                            <p class="text-gray-700" data-i18n="p_3_1">
+                                Для зміни мови, якою спілкується з вами бот, використовуйте <b>«Змінити мову»</b>. Після вибору цієї опції бот запропонує список доступних мов.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Контент для Web-интерфейса -->
+            <div id="cui-content" class="tab-content hidden">
+                <header class="text-center mb-10">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-700 mb-2" data-i18n="title_cui">
+                        Інструкція по доступу до Web-інтерфейсу
+                    </h1>
+                    <p class="text-lg text-gray-500">
+                        <span data-i18n="subtitle_cui_part1">Покрокова інструкція для доступу до веб-системи. Адреса:</span>
+                        <a href="http://qr-guest.ddns.net" target="_blank" class="text-blue-600 hover:text-blue-800 underline">http://qr-guest.ddns.net</a>
+                    </p>
+                </header>
+
+                <!-- Секция 1: Регистрация -->
+                <section class="mb-12 border-b pb-8 border-blue-100">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">1.</span> <span data-i18n="h2_cui_1">Реєстрація нового користувача</span>
+                    </h2>
+
+                    <div class="flex flex-col md:flex-row items-start justify-between bg-blue-50 p-6 rounded-lg shadow-inner">
+                        
+                        <!-- Шаги регистрации -->
+                        <div class="md:w-3/5 space-y-4 md:pr-6">
+                            <div class="step-item">
+                                <p class="text-lg font-semibold text-blue-800 mb-1" data-i18n="h3_cui_1_1">Крок 1.1: Перехід і початок</p>
+                                <p class="text-gray-700" data-i18n="p_cui_1_1">Перейдіть за вказаним посиланням: <code class="bg-gray-200 p-1 rounded text-gray-700">http://qr-guest.ddns.net</code>.</p>
+                            </div>
+                            <div class="step-item">
+                                <p class="text-lg font-semibold text-blue-800 mb-1" data-i18n="h3_cui_1_2">Крок 1.2: Заповнення даних</p>
+                                <p class="text-gray-700" data-i18n="p_cui_1_2">Натисніть кнопку <strong class="text-blue-600">"Реєстрація"</strong> та введіть ваші дані (пошту, пароль, підтвердження) у форму. Натисніть <strong class="text-blue-600">"Зареєструватися"</strong>.</p>
+                            </div>
+
+                            <p class="text-lg font-semibold text-gray-700 mt-6">
+                                <span class="text-blue-600" data-i18n="span_cui_1_3">ВАЖЛИВО:</span> <span data-i18n="h3_cui_1_3">Підтвердження реєстрації</span>
+                            </p>
+                            <div class="p-3 bg-white rounded-lg shadow-sm border-l-4 border-green-500">
+                                <p class="text-gray-700 font-medium" data-i18n="p_cui_1_3">
+                                    Одразу після реєстрації, <strong class="text-green-700">перевірте свою електронну пошту</strong>. Вам буде надіслано лист. Будь ласка, дотримуйтесь інструкцій у листі, щоб підтвердити вашу реєстрацію та активувати обліковий запис.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Изображение формы регистрации -->
+                        <div class="mt-6 md:mt-0 md:w-2/5 flex-shrink-0">
+                            <p class="text-sm font-medium text-gray-600 mb-2 text-center" data-i18n="p_cui_form_reg">Форма реєстрації:</p>
+                            <!-- Плейсхолдер для изображения -->
+                            <img src="manual2.png" 
+                                 alt="Форма регистрации в веб-системе" 
+                                 class="w-full h-auto rounded-xl border-4 border-white shadow-lg mx-auto"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/300x400/3b82f6/ffffff?text=Web+Registration+Form'" />
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Секция 2: Вход в систему -->
+                <section class="mb-12 border-b pb-8 border-blue-100">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">2.</span> <span data-i18n="h2_cui_2">Вхід до системи</span>
+                    </h2>
+
+                    <div class="flex flex-col md:flex-row items-start justify-between bg-blue-50 p-6 rounded-lg shadow-inner">
+                        
+                        <!-- Шаги входа -->
+                        <div class="md:w-3/5 space-y-4 md:pr-6 order-2 md:order-1">
+                            <div class="step-item">
+                                <p class="text-lg font-semibold text-blue-800 mb-1" data-i18n="h3_cui_2_1">Крок 2.1: Підготовка</p>
+                                <p class="text-gray-700" data-i18n="p_cui_2_1">Переконайтеся, що ви підтвердили свій обліковий запис через лист.</p>
+                            </div>
+                            <div class="step-item">
+                                <p class="text-lg font-semibold text-blue-800 mb-1" data-i18n="h3_cui_2_2">Крок 2.2: Введення даних</p>
+                                <p class="text-gray-700" data-i18n="p_cui_2_2">На сторінці входу введіть вашу <strong class="text-blue-600">Адресу електронної пошти</strong> та <strong class="text-blue-600">Пароль</strong>.</p>
+                            </div>
+                            <div class="step-item">
+                                <p class="text-lg font-semibold text-blue-800 mb-1" data-i18n="h3_cui_2_3">Крок 2.3: Доступ</p>
+                                <p class="text-gray-700" data-i18n="p_cui_2_3">Натисніть кнопку <strong class="text-blue-600">"Увійти"</strong> (Увійти) для доступу до системи.</p>
+                            </div>
+                        </div>
+
+                        <!-- Изображение формы входа -->
+                        <div class="mt-6 md:mt-0 md:w-2/5 flex-shrink-0 order-1 md:order-2">
+                            <p class="text-sm font-medium text-gray-600 mb-2 text-center" data-i18n="p_cui_form_login">Форма входу:</p>
+                            <!-- Плейсхолдер для изображения -->
+                            <img src="manual1.png" 
+                                 alt="Форма входа в веб-систему" 
+                                 class="w-full h-auto rounded-xl border-4 border-white shadow-lg mx-auto"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/300x400/3b82f6/ffffff?text=Web+Login+Form'" />
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Секция 3: Админ-панель и управление пропусками -->
+                <section class="mb-12 border-b pb-8 border-blue-100">
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">3.</span> <span data-i18n="h2_cui_3">Адмін-панель: Створення та керування QR-кодами</span>
+                    </h2>
+
+                    <div class="space-y-8">
+                        
+                        <!-- Изображение админ-панели -->
+                        <div class="w-full mx-auto">
+                             <p class="text-sm font-medium text-gray-600 mb-2 text-center" data-i18n="p_cui_admin_image_desc">Інтерфейс адмін-панелі:</p>
+                             <img src="manual3.png" 
+                                 alt="Скриншот административной панели для генерации и поиска QR-кодов" 
+                                 class="w-full h-auto rounded-xl border-4 border-white shadow-lg mx-auto"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/900x500/3b82f6/ffffff?text=Admin+Panel+Interface'" />
+                        </div>
+
+                        <!-- 3.1. Блок Генерации (верхний уровень) -->
+                        <div class="p-6 bg-green-50 border-l-4 border-green-600 rounded-lg shadow-md">
+                            <p class="text-xl font-bold text-green-700 mb-3" data-i18n="h3_cui_3_1">Етап 1: Створення нових QR-кодів (Форма «Створити QR-код»)</p>
+                            <p class="text-gray-700 mb-4" data-i18n="p_cui_3_1_desc">
+                                У верхній частині панелі знаходиться форма для створення разових перепусток:
+                            </p>
+                            <ul class="list-disc list-inside space-y-1 ml-4 text-gray-700">
+                                <li data-i18n="p_cui_3_1_1"><b>Поле «Ім'я» (Name):</b> Введіть ім'я відвідувача.</li>
+                                <li data-i18n="p_cui_3_1_2"><b>Поле «Дата дії» (Date):</b> Вкажіть дату, до якої діятиме перепустка.</li>
+                                <li data-i18n="p_cui_3_1_3"><b>Кнопка «Згенерувати» (Generate):</b> Створює унікальний QR-код.</li>
+                            </ul>
+                            <div class="mt-4 text-sm text-green-800 font-semibold" data-i18n="p_cui_3_1_note">
+                                <span class="font-bold">Примітка:</span> Сгенерований QR-код автоматично додається до таблиці нижче.
+                            </div>
+                        </div>
+
+                        <!-- 3.2. Блок Поиска (средний уровень) -->
+                        <div class="p-6 bg-yellow-50 border-l-4 border-yellow-600 rounded-lg shadow-md">
+                            <p class="text-xl font-bold text-yellow-700 mb-3" data-i18n="h3_cui_3_2">Етап 2: Пошук і фільтрація перепусток (Форма «Пошук за...»)</p>
+                            <p class="text-gray-700 mb-4" data-i18n="p_cui_3_2_desc">
+                                Нижче форми генерації розташовані інструменти для швидкого пошуку:
+                            </p>
+                            <ul class="list-disc list-inside space-y-1 ml-4 text-gray-700">
+                                <li data-i18n="p_cui_3_2_1"><b>Пошук за ім'ям:</b> Фільтрування за іменем відвідувача.</li>
+                                <li data-i18n="p_cui_3_2_2"><b>Пошук за датою (від / до):</b> Вибір діапазону дат створення.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 3.3. Блок Таблицы (нижний уровень) -->
+                        <div class="p-6 bg-blue-50 border-l-4 border-blue-600 rounded-lg shadow-md">
+                            <p class="text-xl font-bold text-blue-700 mb-3" data-i18n="h3_cui_3_3">Етап 3: Перегляд та управління (Таблиця «Ваші QR-коди»)</p>
+                            <p class="text-gray-700" data-i18n="p_cui_3_3_table_desc">
+                                <b>Таблиця «Ваші QR-коди»</b> відображає всі створені перепустки. Колонки включають: №, Ім'я, Дата дії, QR-код (з візуальним зображенням) та кнопка «Видалити» для керування кожною перепусткою.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Секция 4: Личный кабинет (Измененный макет: Изображение СЛЕВА, Текст СПРАВА) -->
+                <section>
+                    <h2 class="text-2xl font-bold text-blue-600 mb-6 flex items-center">
+                        <span class="mr-3 text-3xl">4.</span> <span data-i18n="h2_cui_4">Особистий кабінет: Налаштування профілю</span>
+                    </h2>
+
+                    <div class="flex flex-col lg:flex-row items-start space-y-8 lg:space-y-0 lg:space-x-8">
+                        
+                        <!-- Блок Изображения (СЛЕВА, md:w-1/3) -->
+                        <div class="w-full lg:w-1/3 flex-shrink-0">
+                             <p class="text-sm font-medium text-gray-600 mb-2 text-center" data-i18n="p_cui_account_image_desc">Інтерфейс Особистого кабінету:</p>
+                             <img src="manual4.png" 
+                                 alt="Скриншот личного кабинета для смены пароля и темы" 
+                                 class="w-full h-auto rounded-xl border-4 border-white shadow-lg mx-auto"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/900x500/8b5cf6/ffffff?text=Personal+Account+Interface'" />
+                        </div>
+
+                        <!-- Блоки Текста (СПРАВА, md:w-2/3) -->
+                        <div class="w-full lg:w-2/3 space-y-6">
+                            
+                            <!-- 4.1. Блок Смены темы -->
+                            <div class="p-6 bg-purple-50 border-l-4 border-purple-600 rounded-lg shadow-md">
+                                <p class="text-xl font-bold text-purple-700 mb-3" data-i18n="h3_cui_4_1">Керування темою інтерфейсу</p>
+                                <p class="text-gray-700 mb-4" data-i18n="p_cui_4_1_desc">
+                                    У розділі **"Керування темою"** ви можете вибрати один із трьох варіантів оформлення:
+                                </p>
+                                <ul class="list-disc list-inside space-y-1 ml-4 text-gray-700">
+                                    <li data-i18n="p_cui_4_1_1"><b>Світла тема:</b> Стандартне світле оформлення.</li>
+                                    <li data-i18n="p_cui_4_1_2"><b>Темна тема:</b> Оформлення з темним фоном для комфортної роботи вночі.</li>
+                                    <li data-i18n="p_cui_4_1_3"><b>Системна тема:</b> Тема автоматично адаптується під налаштування вашої операційної системи.</li>
+                                </ul>
+                            </div>
+
+                            <!-- 4.2. Блок Смены пароля -->
+                            <div class="p-6 bg-red-50 border-l-4 border-red-600 rounded-lg shadow-md">
+                                <p class="text-xl font-bold text-red-700 mb-3" data-i18n="h3_cui_4_2">Зміна пароля</p>
+                                <p class="text-gray-700 mb-4" data-i18n="p_cui_4_2_desc">
+                                    Для забезпечення безпеки вашого облікового запису регулярно змінюйте пароль. Вам потрібно буде ввести:
+                                </p>
+                                <ul class="list-disc list-inside space-y-1 ml-4 text-gray-700">
+                                    <li data-i18n="p_cui_4_2_1">Поточний пароль.</li>
+                                    <li data-i18n="p_cui_4_2_2">Новий пароль (мінімум 8 символів, обов'язково літери та цифри).</li>
+                                    <li data-i18n="p_cui_4_2_3">Підтвердження нового пароля.</li>
+                                </ul>
+                                <p class="mt-4 text-sm text-red-800 font-semibold" data-i18n="p_cui_4_2_note">
+                                    Зміни набудуть чинності після натискання кнопки **«Зберегти пароль»**.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <footer class="mt-10 pt-6 border-t text-center text-gray-400 text-sm">
+                <p data-i18n="footer_text">Керівництво користувача | QR-Code Pass System</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            'ru': {
+                'title_page': 'Инструкция: Бот и Web-интерфейс QR-кодов',
+                'tab_telegram': 'Telegram',
+                'tab_cui': 'Web-интерфейс',
+                'title_telegram': 'Инструкция по QR-Code Pass Bot',
+                'subtitle_telegram': 'Пошаговое руководство для получения разовых пропусков',
+                'p_qr_use': 'Используйте для входа в бот:',
+                'h2_1': 'Регистрация и начало работы',
+                'h3_1_1': 'Зайдите и зарегистрируйтесь',
+                'p_1_1': 'Перейдите по QR-коду выше (или найдите бота по имени <a href="https://t.me/qrcodepassbot" target="_blank"><b>@QRCODEPASSBOT</b></a>). Запустите бота, нажав «Начать» (Start) и следуйте всем <b>инструкциям</b> для прохождения регистрации.',
+                'h3_1_2': 'Подтверждение',
+                'p_1_2': 'После ввода данных, подтвердите вашу регистрацию, отправив код подтверждения в бот, код бот отправит на вашу <b>электронную почту (email)</b>.',
+                'h2_2': 'Генерация и просмотр пропусков',
+                'h3_2_1': 'Генерация нового QR-кода',
+                'p_2_1': 'После подтверждения регистрации через email, вернитесь в чат с ботом. Используйте <b>меню чат-бота</b> «Создать пропуск», чтобы <b>сгенерировать новый разовый QR-код</b>.',
+                'h3_2_2': 'Просмотр выданных пропусков («Мои пропуски»)',
+                'p_2_2': 'Чтобы увидеть все ранее выданные пропуски, найдите в меню чат-бота пункт <b>«Мои пропуски»</b>. Это позволит вам отслеживать статус, дату выдачи и данные ваших QR-кодов.',
+                'h2_3': 'Дополнительные настройки',
+                'h3_3_1': 'Смена языка интерфейса',
+                'p_3_1': 'Для изменения языка, на котором общается с вами бот, используйте <b>«Сменить язык»</b>. После выбора этой опции бот предложит список доступных языков.',
+                
+                // CUI/Web Interface Texts
+                'title_cui': 'Инструкция по доступу к Web-интерфейсу',
+                'subtitle_cui_part1': 'Пошаговое руководство для доступа к веб-системе. Адрес:',
+                'h2_cui_1': 'Регистрация нового пользователя',
+                'h3_cui_1_1': 'Шаг 1.1: Переход и начало',
+                'p_cui_1_1': 'Перейдите по указанной ссылке: <code class="bg-gray-200 p-1 rounded text-gray-700">http://qr-guest.ddns.net</code>.',
+                'h3_cui_1_2': 'Шаг 1.2: Заполнение данных',
+                'p_cui_1_2': 'Нажмите кнопку <strong class="text-blue-600">"Реєстрація"</strong> и введите ваши данные (почту, пароль, подтверждение) в форму. Нажмите <strong class="text-blue-600">"Зареєструватися"</strong>.',
+                'span_cui_1_3': 'ВАЖНО:',
+                'h3_cui_1_3': 'Подтверждение регистрации',
+                'p_cui_1_3': 'Сразу после регистрации, <strong class="text-green-700">проверьте свою электронную почту</strong>. Вам будет отправлено письмо. Пожалуйста, следуйте инструкциям в письме, чтобы подтвердить вашу регистрацию и активировать учетную запись.',
+                'p_cui_form_reg': 'Форма регистрации:',
+                'h2_cui_2': 'Вход в систему',
+                'h3_cui_2_1': 'Шаг 2.1: Подготовка',
+                'p_cui_2_1': 'Убедитесь, что вы подтвердили свою учетную запись через письмо.',
+                'h3_cui_2_2': 'Шаг 2.2: Ввод данных',
+                'p_cui_2_2': 'На странице входа введите ваш <strong class="text-blue-600">Адрес электронной почты</strong> и <strong class="text-blue-600">Пароль</strong>.',
+                'h3_cui_2_3': 'Шаг 2.3: Доступ',
+                'p_cui_2_3': 'Нажмите кнопку <strong class="text-blue-600">"Увійти"</strong> (Войти) для доступа к системе.',
+                'p_cui_form_login': 'Форма входа:',
+                'p_cui_admin_image_desc': 'Интерфейс админ-панели:',
+                'h2_cui_3': 'Админ-панель: Создание и управление QR-кодами',
+                'h3_cui_3_1': 'Этап 1: Создание новых QR-кодов (Форма «Создать QR-код»)',
+                'p_cui_3_1_desc': 'В верхней части панели находится форма для создания разовых пропусков:',
+                'p_cui_3_1_1': '<b>Поле «Имя» (Name):</b> Введите имя посетителя.',
+                'p_cui_3_1_2': '<b>Поле «Дата действия» (Date):</b> Укажите дату, до которой будет действовать пропуск.',
+                'p_cui_3_1_3': '<b>Кнопка «Сгенерировать» (Generate):</b> Создает уникальный QR-код.',
+                'p_cui_3_1_note': '<span class="font-bold">Примечание:</span> Сгенерированный QR-код автоматически добавляется в таблицу ниже.',
+                'h3_cui_3_2': 'Этап 2: Поиск и фильтрация пропусков (Форма «Поиск за...»)',
+                'p_cui_3_2_desc': 'Ниже формы генерации расположены инструменты для быстрого поиска:',
+                'p_cui_3_2_1': '<b>Поиск по имени:</b> Фильтрация по имени посетителя.',
+                'p_cui_3_2_2': '<b>Поиск по дате (от / до):</b> Выбор диапазона дат создания.',
+                'h3_cui_3_3': 'Этап 3: Просмотр и управление (Таблица «Ваши QR-коды»)',
+                'p_cui_3_3_table_desc': '<b>Таблица «Ваши QR-коды»</b> отображает все созданные пропуски. Колонки включают: №, Имя, Дата действия, QR-код (с визуальным изображением) и кнопка «Удалить» для управления каждым пропуском.',
+                'h2_cui_4': 'Личный кабинет: Настройка профиля',
+                'p_cui_account_image_desc': 'Интерфейс Личного кабинета:',
+                'h3_cui_4_1': 'Управление темой интерфейса',
+                'p_cui_4_1_desc': 'В разделе **"Управление темой"** вы можете выбрать один из трех вариантов оформления:',
+                'p_cui_4_1_1': '<b>Светлая тема:</b> Стандартное светлое оформление.',
+                'p_cui_4_1_2': '<b>Темная тема:</b> Оформление с темным фоном для комфортной работы ночью.',
+                'p_cui_4_1_3': '<b>Системная тема:</b> Тема автоматически адаптируется под настройки вашей операционной системы.',
+                'h3_cui_4_2': 'Смена пароля',
+                'p_cui_4_2_desc': 'Для обеспечения безопасности вашего аккаунта регулярно меняйте пароль. Вам потребуется ввести:',
+                'p_cui_4_2_1': 'Текущий пароль.',
+                'p_cui_4_2_2': 'Новый пароль (минимум 8 символов, обязательно буквы и цифры).',
+                'p_cui_4_2_3': 'Подтверждение нового пароля.',
+                'p_cui_4_2_note': 'Изменения вступят в силу после нажатия кнопки **«Сохранить пароль»**.',
+                'footer_text': 'Руководство пользователя | QR-Code Pass System',
+            },
+            'ua': {
+                'title_page': 'Інструкція: Бот та Web-інтерфейс QR-кодів',
+                'tab_telegram': 'Telegram',
+                'tab_cui': 'Web-інтерфейс',
+                'title_telegram': 'Інструкція по QR-Code Pass Bot',
+                'subtitle_telegram': 'Покрокова інструкція для отримання разових перепусток',
+                'p_qr_use': 'Використовуйте для входу в бот:',
+                'h2_1': 'Реєстрація та початок роботи',
+                'h3_1_1': 'Зайдіть та зареєструйтеся',
+                'p_1_1': 'Перейдіть по QR-коду вище (або знайдіть бота за іменем <a href="https://t.me/qrcodepassbot" target="_blank"><b>@QRCODEPASSBOT</b></a>). Запустіть бота, натиснувши «Розпочати» (Start) та дотримуйтесь усіх <b>інструкцій</b> для проходження реєстрації.',
+                'h3_1_2': 'Підтвердження',
+                'p_1_2': 'Після введення даних, підтвердьте вашу реєстрацію, надіславши код підтвердження в бот, код бот надішле на вашу <b>електронну пошту (email)</b>.',
+                'h2_2': 'Генерація та перегляд перепусток',
+                'h3_2_1': 'Генерація нового QR-коду',
+                'p_2_1': 'Після підтвердження реєстрації через email, поверніться до чату з ботом. Використовуйте <b>меню чат-бота</b> «Створити перепустку», щоб <b>згенеерувати новий разовий QR-код</b>.',
+                'h3_2_2': 'Перегляд виданих перепусток («Мої перепустки»)',
+                'p_2_2': 'Щоб побачити всі раніше видані перепустки, знайдіть у меню чат-бота пункт <b>«Мої перепустки»</b>. Це дозволить вам відстежувати статус, дату видачі та дані ваших QR-кодів.',
+                'h2_3': 'Додаткові налаштування',
+                'h3_3_1': 'Зміна мови інтерфейсу',
+                'p_3_1': 'Для зміни мови, якою спілкується з вами бот, використовуйте <b>«Змінити мову»</b>. Після вибору цієї опції бот запропонує список доступних мов.',
+
+                // CUI/Web Interface Texts
+                'title_cui': 'Інструкція по доступу до Web-інтерфейсу',
+                'subtitle_cui_part1': 'Покрокова інструкція для доступу до веб-системи. Адреса:',
+                'h2_cui_1': 'Реєстрація нового користувача',
+                'h3_cui_1_1': 'Крок 1.1: Перехід і початок',
+                'p_cui_1_1': 'Перейдіть за вказаним посиланням: <code class="bg-gray-200 p-1 rounded text-gray-700">http://qr-guest.ddns.net</code>.',
+                'h3_cui_1_2': 'Крок 1.2: Заповнення даних',
+                'p_cui_1_2': 'Натисніть кнопку <strong class="text-blue-600">"Реєстрація"</strong> та введіть ваші дані (пошту, пароль, підтвердження) у форму. Натисніть <strong class="text-blue-600">"Зареєструватися"</strong>.',
+                'span_cui_1_3': 'ВАЖЛИВО:',
+                'h3_cui_1_3': 'Підтвердження реєстрації',
+                'p_cui_1_3': 'Одразу після реєстрації, <strong class="text-green-700">перевірте свою електронну пошту</strong>. Вам буде надіслано лист. Будь ласка, дотримуйтесь інструкцій у листі, щоб підтвердити вашу реєстрацію та активувати обліковий запис.',
+                'p_cui_form_reg': 'Форма реєстрації:',
+                'h2_cui_2': 'Вхід до системи',
+                'h3_cui_2_1': 'Крок 2.1: Підготовка',
+                'p_cui_2_1': 'Переконайтеся, що ви підтвердили свій обліковий запис через лист.',
+                'h3_cui_2_2': 'Крок 2.2: Введення даних',
+                'p_cui_2_2': 'На сторінці входу введіть вашу <strong class="text-blue-600">Адресу електронної пошти</strong> та <strong class="text-blue-600">Пароль</strong>.',
+                'h3_cui_2_3': 'Крок 2.3: Доступ',
+                'p_cui_2_3': 'Натисніть кнопку <strong class="text-blue-600">"Увійти"</strong> (Увійти) для доступу до системи.',
+                'p_cui_form_login': 'Форма входу:',
+                'p_cui_admin_image_desc': 'Інтерфейс адмін-панелі:',
+                'h2_cui_3': 'Адмін-панель: Створення та керування QR-кодами',
+                'h3_cui_3_1': 'Етап 1: Створення нових QR-кодів (Форма «Створити QR-код»)',
+                'p_cui_3_1_desc': 'У верхній частині панелі знаходиться форма для створення разових перепусток:',
+                'p_cui_3_1_1': '<b>Поле «Ім\'я» (Name):</b> Введіть ім\'я відвідувача.',
+                'p_cui_3_1_2': '<b>Поле «Дата дії» (Date):</b> Вкажіть дату, до якої діятиме перепустка.',
+                'p_cui_3_1_3': '<b>Кнопка «Згенерувати» (Generate):</b> Створює унікальний QR-код.',
+                'p_cui_3_1_note': '<span class="font-bold">Примітка:</span> Сгенерований QR-код автоматично додається до таблиці нижче.',
+                'h3_cui_3_2': 'Етап 2: Пошук і фільтрація перепусток (Форма «Пошук за...»)',
+                'p_cui_3_2_desc': 'Нижче форми генерації розташовані інструменти для швидкого пошуку:',
+                'p_cui_3_2_1': '<b>Пошук за ім\'ям:</b> Фільтрування за іменем відвідувача.',
+                'p_cui_3_2_2': '<b>Пошук за датою (від / до):</b> Вибір діапазону дат створення.',
+                'h3_cui_3_3': 'Етап 3: Перегляд та управління (Таблиця «Ваші QR-коди»)',
+                'p_cui_3_3_table_desc': '<b>Таблиця «Ваші QR-коди»</b> відображає всі створені перепустки. Колонки включають: №, Ім\'я, Дата дії, QR-код (з візуальним зображенням) та кнопка «Видалити» для керування кожною перепусткою.',
+                'h2_cui_4': 'Особистий кабінет: Налаштування профілю',
+                'p_cui_account_image_desc': 'Інтерфейс Особистого кабінету:',
+                'h3_cui_4_1': 'Керування темою інтерфейсу',
+                'p_cui_4_1_desc': 'У розділі **"Керування темою"** ви можете вибрати один із трьох варіантів оформлення:',
+                'p_cui_4_1_1': '<b>Світла тема:</b> Стандартне світле оформлення.',
+                'p_cui_4_1_2': '<b>Темна тема:</b> Оформлення з темним фоном для комфортної роботи вночі.',
+                'p_cui_4_1_3': '<b>Системна тема:</b> Тема автоматично адаптується під налаштування вашої операційної системи.',
+                'h3_cui_4_2': 'Зміна пароля',
+                'p_cui_4_2_desc': 'Для забезпечення безпеки вашого облікового запису регулярно змінюйте пароль. Вам потрібно буде ввести:',
+                'p_cui_4_2_1': 'Поточний пароль.',
+                'p_cui_4_2_2': 'Новий пароль (мінімум 8 символів, обов\'язково літери та цифри).',
+                'p_cui_4_2_3': 'Підтвердження нового пароля.',
+                'p_cui_4_2_note': 'Зміни набудуть чинності після натискання кнопки **«Зберегти пароль»**.',
+                'footer_text': 'Керівництво користувача | QR-Code Pass System',
+            },
+            'en': {
+                'title_page': 'Instruction: Bot and Web Interface QR Codes',
+                'tab_telegram': 'Telegram',
+                'tab_cui': 'Web Interface',
+                'title_telegram': 'QR-Code Pass Bot Instruction',
+                'subtitle_telegram': 'Step-by-step guide for obtaining one-time passes',
+                'p_qr_use': 'Use to enter the bot:',
+                'h2_1': 'Registration and getting started',
+                'h3_1_1': 'Log in and register',
+                'p_1_1': 'Go to the QR code above (or find the bot by the name <a href="https://t.me/qrcodepassbot" target="_blank"><b>@QRCODEPASSBOT</b></a>). Start the bot by pressing "Start" and follow all <b>instructions</b> to complete registration.',
+                'h3_1_2': 'Confirmation',
+                'p_1_2': 'After entering the data, confirm your registration by sending the confirmation code to the bot; the bot will send the code to your <b>email</b>.',
+                'h2_2': 'Generation and viewing of passes',
+                'h3_2_1': 'Generating a new QR code',
+                'p_2_1': 'After confirming registration via email, return to the bot chat. Use the <b>chatbot menu</b> "Create Pass" to <b>generate a new one-time QR code</b>.',
+                'h3_2_2': 'Viewing issued passes ("My Passes")',
+                'p_2_2': 'To see all previously issued passes, find the <b>"My Passes"</b> item in the chatbot menu. This allows you to track the status, issue date, and data of your QR codes.',
+                'h2_3': 'Additional settings',
+                'h3_3_1': 'Interface language change',
+                'p_3_1': 'To change the language the bot communicates with you in, use <b>"Change Language"</b>. After selecting this option, the bot will offer a list of available languages.',
+                
+                // CUI/Web Interface Texts
+                'title_cui': 'Web Interface Access Instruction',
+                'subtitle_cui_part1': 'Step-by-step guide for accessing the web system. Address:',
+                'h2_cui_1': 'New User Registration',
+                'h3_cui_1_1': 'Step 1.1: Go and Start',
+                'p_cui_1_1': 'Go to the specified link: <code class="bg-gray-200 p-1 rounded text-gray-700">http://qr-guest.ddns.net</code>.',
+                'h3_cui_1_2': 'Step 1.2: Data Entry',
+                'p_cui_1_2': 'Click the <strong class="text-blue-600">"Реєстрація"</strong> (Registration) button and enter your data (email, password, confirmation) in the form. Click <strong class="text-blue-600">"Зареєструватися"</strong> (Register).',
+                'span_cui_1_3': 'IMPORTANT:',
+                'h3_cui_1_3': 'Registration Confirmation',
+                'p_cui_1_3': 'Immediately after registration, <strong class="text-green-700">check your email</strong>. You will be sent an email. Please follow the instructions in the email to confirm your registration and activate your account.',
+                'p_cui_form_reg': 'Registration Form:',
+                'h2_cui_2': 'System Login',
+                'h3_cui_2_1': 'Step 2.1: Preparation',
+                'p_cui_2_1': 'Make sure you have confirmed your account via email.',
+                'h3_cui_2_2': 'Step 2.2: Data Entry',
+                'p_cui_2_2': 'On the login page, enter your <strong class="text-blue-600">Email Address</strong> and <strong class="text-blue-600">Password</strong>.',
+                'h3_cui_2_3': 'Step 2.3: Access',
+                'p_cui_2_3': 'Click the <strong class="text-blue-600">"Увійти"</strong> (Log In) button to access the system.',
+                'p_cui_form_login': 'Login Form:',
+                'p_cui_admin_image_desc': 'Admin Panel Interface:',
+                'h2_cui_3': 'Admin Panel: QR Code Creation and Management',
+                'h3_cui_3_1': 'Step 1: Creating New QR Codes (Form "Create QR Code")',
+                'p_cui_3_1_desc': 'The upper part of the panel contains a form for creating one-time passes:',
+                'p_cui_3_1_1': '<b>Name Field:</b> Enter the visitor\'s name.',
+                'p_cui_3_1_2': '<b>Date of Validity Field:</b> Specify the date until which the pass is valid.',
+                'p_cui_3_1_3': '<b>"Generate" Button:</b> Creates a unique QR code.',
+                'p_cui_3_1_note': '<span class="font-bold">Note:</span> The generated QR code is automatically added to the table below.',
+                'h3_cui_3_2': 'Step 2: Search and Filter Passes (Form "Search by...")',
+                'p_cui_3_2_desc': 'Below the generation form are tools for quick searching:',
+                'p_cui_3_2_1': '<b>Search by Name:</b> Filtering by visitor name.',
+                'p_cui_3_2_2': '<b>Search by Date (from / to):</b> Selection of the creation date range.',
+                'h3_cui_3_3': 'Step 3: Viewing and Management ("Your QR Codes" Table)',
+                'p_cui_3_3_table_desc': '<b>"Your QR Codes" Table</b> displays all created passes. Columns include: No., Name, Date of Validity, QR Code (with a visual image), and a "Delete" button for managing each pass.',
+                'h2_cui_4': 'Personal Account: Profile Settings',
+                'p_cui_account_image_desc': 'Personal Account Interface:',
+                'h3_cui_4_1': 'Interface Theme Management',
+                'p_cui_4_1_desc': 'In the **"Theme Management"** section, you can select one of three design options:',
+                'p_cui_4_1_1': '<b>Light Theme:</b> Standard light design.',
+                'p_cui_4_1_2': '<b>Dark Theme:</b> Dark background design for comfortable night work.',
+                'p_cui_4_1_3': '<b>System Theme:</b> The theme automatically adapts to your operating system settings.',
+                'h3_cui_4_2': 'Password Change',
+                'p_cui_4_2_desc': 'To ensure the security of your account, change your password regularly. You will need to enter:',
+                'p_cui_4_2_1': 'Current password.',
+                'p_cui_4_2_2': 'New password (minimum 8 characters, letters and numbers required).',
+                'p_cui_4_2_3': 'Confirm new password.',
+                'p_cui_4_2_note': 'Changes will take effect after clicking the **"Save Password"** button.',
+                'footer_text': 'User Guide | QR-Code Pass System',
+            }
+        };
+
+        let currentLanguage = 'ua';
+        let currentTab = 'telegram';
+
+        /**
+         * Sets the application language and updates all text elements.
+         * @param {string} lang 'ru', 'ua', or 'en'
+         */
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const elements = document.querySelectorAll('[data-i18n]');
+            
+            // Set HTML language attribute
+            document.documentElement.lang = lang;
+            
+            // Update the select value if the change didn't originate from the select
+            const selector = document.getElementById('language-selector');
+            if (selector && selector.value !== lang) {
+                selector.value = lang;
+            }
+
+            // Update all translatable elements
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Check if content contains HTML (like <a> or <b>)
+                    const content = translations[lang][key];
+                    if (content.includes('<') || content.includes('>')) {
+                        element.innerHTML = content;
+                    } else {
+                        element.textContent = content;
+                    }
+                }
+            });
+            
+            // Update the document title separately
+            document.title = translations[lang]['title_page'];
+            
+            // Old button styling logic removed as it's no longer necessary.
+            
+            // Re-render tab names in case the language changes while a tab is active
+            updateTabButtonTexts();
+        }
+        
+        /**
+         * Updates the text content of the tab buttons based on the current language.
+         */
+        function updateTabButtonTexts() {
+            const telegramBtn = document.getElementById('tab-telegram-btn');
+            const cuiBtn = document.getElementById('tab-cui-btn');
+            if (telegramBtn) telegramBtn.textContent = translations[currentLanguage]['tab_telegram'];
+            if (cuiBtn) cuiBtn.textContent = translations[currentLanguage]['tab_cui'];
+        }
+
+        /**
+         * Controls the switching between tabs (instructions).
+         * @param {string} tabId 'telegram' or 'cui'
+         */
+        function showTab(tabId) {
+            currentTab = tabId;
+            const contents = document.querySelectorAll('.tab-content');
+            const telegramBtn = document.getElementById('tab-telegram-btn');
+            const cuiBtn = document.getElementById('tab-cui-btn');
+
+            // Hide all content
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Set button and content styles
+            if (tabId === 'telegram') {
+                document.getElementById('telegram-content').classList.remove('hidden');
+                telegramBtn.classList.add('tab-active');
+                telegramBtn.classList.remove('tab-inactive');
+                cuiBtn.classList.remove('tab-active');
+                cuiBtn.classList.add('tab-inactive');
+            } else if (tabId === 'cui') {
+                document.getElementById('cui-content').classList.remove('hidden');
+                cuiBtn.classList.add('tab-active');
+                cuiBtn.classList.remove('tab-inactive');
+                telegramBtn.classList.remove('tab-active');
+                telegramBtn.classList.add('tab-inactive');
+            }
+        }
+
+        // Initialization on page load: set Ukrainian language and show Telegram tab
+        window.onload = () => {
+            // Check if the selector exists and set the default language based on the selected value (UA is default selected)
+            const selector = document.getElementById('language-selector');
+            const defaultLang = selector ? selector.value : 'ua';
+            setLanguage(defaultLang);
+            showTab('telegram');
+        };
+    </script>
+
+</body>
+</html>
